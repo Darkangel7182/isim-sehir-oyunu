@@ -5,26 +5,39 @@ from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'fenerbahce1907'
-
-# async_mode='eventlet' ve cors ayarları Render için kritiktir
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
 
-oyun_verileri = {"mevcut_harf": "", "cevaplar": {}}
+# Oyunun durumunu takip eden ana değişken
+oyun_verileri = {
+    "mevcut_harf": "",
+    "secilen_kategoriler": ["isim", "sehir", "hayvan"], # Başlangıç varsayılanları
+    "cevaplar": {}
+}
+
 HARFLER = "ABCÇDEFGĞHİIJKLMNOÖPRSŞTUÜVYZ"
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
+# Lobide kategori seçimlerini senkronize eder
+@socketio.on('kategori_degistir')
+def handle_category_change(data):
+    oyun_verileri["secilen_kategoriler"] = data['kategoriler']
+    emit('kategorileri_guncelle', {'kategoriler': oyun_verileri["secilen_kategoriler"]}, broadcast=True)
+
 @socketio.on('oyunu_baslat')
 def handle_start():
     oyun_verileri["mevcut_harf"] = random.choice(HARFLER)
     oyun_verileri["cevaplar"] = {}
-    emit('yeni_oyun_basladi', {'harf': oyun_verileri["mevcut_harf"]}, broadcast=True)
+    emit('yeni_oyun_basladi', {
+        'harf': oyun_verileri["mevcut_harf"],
+        'kategoriler': oyun_verileri["secilen_kategoriler"]
+    }, broadcast=True)
 
 @socketio.on('oyunu_bitir')
 def handle_finish():
-    emit('herkese_durdur', broadcast=True)
+    emit('geri_sayim_baslat', {'sure': 10}, broadcast=True)
 
 @socketio.on('cevaplari_gonder')
 def handle_answers(data):
@@ -35,8 +48,9 @@ def handle_answers(data):
 
 def puanlari_hesapla_ve_yayinla():
     sonuclar = {}
-    kategoriler = ['isim', 'sehir', 'hayvan']
+    kategoriler = oyun_verileri["secilen_kategoriler"]
     harf = oyun_verileri["mevcut_harf"]
+    
     for oyuncu, cevaplar in oyun_verileri["cevaplar"].items():
         toplam_puan = 0
         detaylar = {}
@@ -49,17 +63,9 @@ def puanlari_hesapla_ve_yayinla():
             toplam_puan += puan
             detaylar[kat] = {"kelime": kelime, "puan": puan}
         sonuclar[oyuncu] = {"toplam": toplam_puan, "detay": detaylar}
+    
     emit('puan_durumu', sonuclar, broadcast=True)
 
 if __name__ == '__main__':
-    # Render'da portu bu şekilde almak mecburidir
     port = int(os.environ.get("PORT", 5000))
     socketio.run(app, host='0.0.0.0', port=port)
-# ... önceki kodlar aynı ...
-
-@socketio.on('oyunu_bitir')
-def handle_finish():
-    # Birisi bitirdiğinde herkese "10 saniyeniz başladı" sinyali gönder
-    emit('geri_sayim_baslat', {'sure': 10}, broadcast=True)
-
-# ... geri kalan cevaplari_gonder ve puanlama kısmı aynı ...
