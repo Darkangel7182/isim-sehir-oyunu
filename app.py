@@ -8,7 +8,7 @@ app.config['SECRET_KEY'] = 'fenerbahce1907'
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
 
 # Odaların verilerini tutan sözlük
-# Yapı: { 'oda_adi': { 'sifre': '123', 'host': 'sid', 'kategoriler': [], 'harf': '', 'cevaplar': {} } }
+# Yapı: { 'oda_adi': { 'sifre': '123', 'host': 'sid', 'kategoriler': [], 'harf': '', 'cevaplar': {}, 'geri_sayim_basladi': False } }
 odalar = {}
 
 HARFLER = "ABCÇDEFGĞHİIJKLMNOÖPRSŞTUÜVYZ"
@@ -19,8 +19,11 @@ def index():
 
 @socketio.on('oda_olustur')
 def handle_create(data):
-    oda = data['oda']
-    sifre = data['sifre']
+    oda = data.get('oda', '').strip()
+    sifre = data.get('sifre', '').strip()
+    if not oda or not sifre:
+        emit('hata', {'mesaj': 'Oda adı ve şifre zorunludur!'})
+        return
     if oda in odalar:
         emit('hata', {'mesaj': 'Bu oda zaten var!'})
     else:
@@ -29,15 +32,19 @@ def handle_create(data):
             'host': request.sid,
             'kategoriler': ["İsim", "Şehir", "Hayvan"],
             'harf': '',
-            'cevaplar': {}
+            'cevaplar': {},
+            'geri_sayim_basladi': False
         }
         join_room(oda)
         emit('oda_katildi', {'oda': oda, 'is_host': True})
 
 @socketio.on('oda_katil')
 def handle_join(data):
-    oda = data['oda']
-    sifre = data['sifre']
+    oda = data.get('oda', '').strip()
+    sifre = data.get('sifre', '').strip()
+    if not oda or not sifre:
+        emit('hata', {'mesaj': 'Oda adı ve şifre zorunludur!'})
+        return
     if oda in odalar and odalar[oda]['sifre'] == sifre:
         join_room(oda)
         emit('oda_katildi', {'oda': oda, 'is_host': False})
@@ -59,6 +66,7 @@ def handle_start(data):
     if oda in odalar and odalar[oda]['host'] == request.sid:
         odalar[oda]['harf'] = random.choice(HARFLER)
         odalar[oda]['cevaplar'] = {}
+        odalar[oda]['geri_sayim_basladi'] = False
         emit('yeni_oyun_basladi', {
             'harf': odalar[oda]['harf'],
             'kategoriler': odalar[oda]['kategoriler']
@@ -66,7 +74,11 @@ def handle_start(data):
 
 @socketio.on('oyunu_bitir')
 def handle_finish(data):
-    emit('geri_sayim_baslat', {'sure': 10}, room=data['oda'])
+    oda = data['oda']
+    if oda in odalar and not odalar[oda]['geri_sayim_basladi']:
+        odalar[oda]['geri_sayim_basladi'] = True
+        emit('bitirildi', room=oda)
+        emit('geri_sayim_baslat', {'sure': 10}, room=oda)
 
 @socketio.on('cevaplari_gonder')
 def handle_answers(data):

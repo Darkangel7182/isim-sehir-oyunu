@@ -1,0 +1,10 @@
+{
+  "appId": "com.isimsehiroyunu.app",
+  "appName": "İsim Şehir Oyunu",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "server": {
+    "url": "https://isim-sehir-oyunu.onrender.com",
+    "cleartext": false
+  }
+}
