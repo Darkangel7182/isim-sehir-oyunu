@@ -7,168 +7,138 @@
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Indie+Flower&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <style>
-        body {
-            background-color: #d1d1d1; /* Masa yüzeyi rengi */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            font-family: 'Indie Flower', cursive;
-        }
+        body { background-color: #d1d1d1; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; font-family: 'Indie Flower', cursive; }
+        .paper { background: #fff; background-image: linear-gradient(#919191 1px, transparent 1px), linear-gradient(90deg, #ffadad 2px, transparent 2px); background-size: 100% 30px, 100% 100%; background-position: 0 0, 50px 0; width: 95%; max-width: 900px; min-height: 600px; padding: 40px 40px 40px 80px; box-shadow: 10px 10px 20px rgba(0,0,0,0.2); position: relative; }
+        
+        #harf-alani { position: absolute; top: 10px; right: 30px; font-size: 60px; color: #d35400; border: 3px solid #d35400; border-radius: 50%; width: 90px; height: 90px; display: flex; align-items: center; justify-content: center; font-family: 'Caveat', cursive; }
+        #sayac { position: absolute; top: 20px; left: 100px; font-size: 30px; color: #c0392b; display: none; }
 
-        /* Defter Kağıdı Tasarımı */
-        .paper {
-            background: #fff;
-            background-image: 
-                linear-gradient(#919191 1px, transparent 1px), /* Yatay çizgiler */
-                linear-gradient(90deg, #ffadad 2px, transparent 2px); /* Kırmızı marj çizgisi */
-            background-size: 100% 30px, 100% 100%;
-            background-position: 0 0, 50px 0;
-            width: 90%;
-            max-width: 800px;
-            min-height: 500px;
-            padding: 40px 20px 40px 70px; /* Marjın dışına taşmamak için sol padding fazla */
-            box-shadow: 10px 10px 20px rgba(0,0,0,0.2);
-            position: relative;
-            transform: rotate(-1deg); /* Hafif yamuk durması gerçekçiliği artırır */
-        }
+        .kategori-secimi { margin: 20px 0; padding: 10px; border: 1px dashed #bdc3c7; background: rgba(255,255,255,0.5); }
+        .checkbox-group { display: flex; flex-wrap: wrap; gap: 10px; font-size: 18px; }
 
-        h1 { color: #2c3e50; text-decoration: underline; margin-top: 0; }
-
-        #harf-alani {
-            position: absolute;
-            top: 20px;
-            right: 40px;
-            font-size: 70px;
-            color: #d35400;
-            border: 3px solid #d35400;
-            border-radius: 50%;
-            width: 100px;
-            height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transform: rotate(5deg);
-            font-family: 'Caveat', cursive;
-        }
-
-        .input-group {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-top: 60px;
-        }
-
-        input {
-            background: transparent;
-            border: none;
-            border-bottom: 2px solid #2980b9;
-            font-family: 'Caveat', cursive;
-            font-size: 24px;
-            color: #2c3e50;
-            padding: 5px;
-            outline: none;
-        }
-
-        input:disabled { color: #7f8c8d; border-bottom: 2px solid #bdc3c7; }
-
-        button {
-            margin-top: 30px;
-            background-color: #e67e22;
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            font-family: 'Indie Flower', cursive;
-            font-size: 18px;
-            cursor: pointer;
-            border-radius: 3px;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-        }
-
-        button:hover { background-color: #d35400; }
+        .input-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin-top: 30px; }
+        .input-item { display: flex; flex-direction: column; }
+        input { background: transparent; border: none; border-bottom: 2px solid #2980b9; font-family: 'Caveat', cursive; font-size: 22px; outline: none; }
+        
+        button { background-color: #e67e22; color: white; border: none; padding: 10px 20px; font-family: 'Indie Flower', cursive; cursor: pointer; border-radius: 3px; margin: 10px 5px; }
         button:disabled { background-color: #bdc3c7; }
 
-        /* Puan Tablosu Stili */
-        #sonuc-tablosu {
-            width: 100%;
-            margin-top: 40px;
-            border-collapse: collapse;
-            font-size: 20px;
-        }
-
-        th { text-align: left; border-bottom: 2px solid #2c3e50; color: #2c3e50; }
-        td { padding: 10px 0; border-bottom: 1px dashed #bdc3c7; }
+        table { width: 100%; border-collapse: collapse; margin-top: 30px; font-family: 'Caveat', cursive; font-size: 22px; }
+        th { text-align: left; border-bottom: 2px solid #333; }
+        td { border-bottom: 1px solid #ddd; padding: 5px; }
     </style>
 </head>
 <body>
     <div class="paper">
-        <h1>İsim Şehir Hayvan</h1>
+        <div id="sayac">HIZLI OL!</div>
         <div id="harf-alani">?</div>
-        
-        <button onclick="baslat()">Kağıdı Hazırla (Başlat)</button>
+        <h1>İsim Şehir Hayvan</h1>
 
-        <div class="input-group">
-            <div>
-                <label>İsim:</label><br>
-                <input type="text" class="cevap" placeholder="Yazınız..." disabled>
-            </div>
-            <div>
-                <label>Şehir:</label><br>
-                <input type="text" class="cevap" placeholder="Yazınız..." disabled>
-            </div>
-            <div>
-                <label>Hayvan:</label><br>
-                <input type="text" class="cevap" placeholder="Yazınız..." disabled>
-            </div>
+        <div id="lobi-alani">
+            <h3>Kategorileri Seçin:</h3>
+            <div class="checkbox-group" id="kategori-listesi">
+                </div>
+            <button onclick="baslat()">OYUNU BAŞLAT</button>
         </div>
 
-        <button id="bitir-btn" onclick="bitir()" disabled>KALEMLERİ BIRAK!</button>
+        <div id="oyun-alani" class="input-grid">
+            </div>
 
+        <button id="bitir-btn" onclick="bitir()" style="display:none;">KALEMLERİ BIRAK!</button>
         <div id="puan-tablosu-alani"></div>
     </div>
 
     <script>
         var socket = io();
+        const tumKategoriler = ["İsim", "Şehir", "Hayvan", "Bitki", "Ülke", "Ünlü", "Dizi/Film", "Şarkı", "Yemek", "Kıyafet"];
+        let aktifKategoriler = [];
+
+        // Lobi listesini oluştur
+        const listeDiv = document.getElementById('kategori-listesi');
+        tumKategoriler.forEach(kat => {
+            let label = document.createElement('label');
+            label.innerHTML = `<input type="checkbox" class="kat-cb" value="${kat}" onchange="kategoriGuncelle()"> ${kat}`;
+            listeDiv.appendChild(label);
+        });
+
+        function kategoriGuncelle() {
+            const secilenler = Array.from(document.querySelectorAll('.kat-cb:checked')).map(cb => cb.value);
+            socket.emit('kategori_degistir', {kategoriler: secilenler});
+        }
+
+        socket.on('kategorileri_guncelle', function(data) {
+            aktifKategoriler = data.kategoriler;
+            document.querySelectorAll('.kat-cb').forEach(cb => {
+                cb.checked = aktifKategoriler.includes(cb.value);
+            });
+        });
 
         function baslat() { socket.emit('oyunu_baslat'); }
         function bitir() { socket.emit('oyunu_bitir'); }
 
         socket.on('yeni_oyun_basladi', function(data) {
+            aktifKategoriler = data.kategoriler;
             document.getElementById('harf-alani').innerText = data.harf;
             document.getElementById('puan-tablosu-alani').innerHTML = "";
+            document.getElementById('lobi-alani').style.display = "none";
+            document.getElementById('bitir-btn').style.display = "block";
             document.getElementById('bitir-btn').disabled = false;
-            var inputs = document.querySelectorAll('.cevap');
-            inputs.forEach(input => { input.value = ""; input.disabled = false; });
+
+            const oyunAlani = document.getElementById('oyun-alani');
+            oyunAlani.innerHTML = "";
+            aktifKategoriler.forEach(kat => {
+                oyunAlani.innerHTML += `<div class="input-item"><label>${kat}:</label><input type="text" class="cevap"></div>`;
+            });
         });
 
-        socket.on('herkese_durdur', function() {
-            var inputs = document.querySelectorAll('.cevap');
-            var cevaplarim = {
-                'isim': inputs[0].value,
-                'sehir': inputs[1].value,
-                'hayvan': inputs[2].value
-            };
-            inputs.forEach(input => input.disabled = true);
+        socket.on('geri_sayim_baslat', function(data) {
+            let kalan = data.sure;
+            document.getElementById('sayac').style.display = "block";
+            let interval = setInterval(() => {
+                kalan--;
+                document.getElementById('sayac').innerText = "KALAN: " + kalan;
+                if(kalan <= 0) {
+                    clearInterval(interval);
+                    document.getElementById('sayac').style.display = "none";
+                    oyunuDurdur();
+                }
+            }, 1000);
+        });
+
+        function oyunuDurdur() {
+            const inputs = document.querySelectorAll('.cevap');
+            let cevaplarim = {};
+            aktifKategoriler.forEach((kat, index) => {
+                cevaplarim[kat] = inputs[index].value;
+                inputs[index].disabled = true;
+            });
             document.getElementById('bitir-btn').disabled = true;
             socket.emit('cevaplari_gonder', {cevaplar: cevaplarim});
-        });
+        }
 
         socket.on('puan_durumu', function(data) {
-            let html = "<table id='sonuc-tablosu'><tr><th>Oyuncu</th><th>İsim</th><th>Şehir</th><th>Hayvan</th><th>Puan</th></tr>";
+            let html = "<table><tr><th>Oyuncu</th>";
+            aktifKategoriler.forEach(kat => html += `<th>${kat}</th>`);
+            html += "<th>Toplam</th></tr>";
+            
             for (let id in data) {
-                let d = data[id].detay;
-                html += `<tr>
-                    <td>${id.substring(0,4)}</td>
-                    <td>${d.isim.kelime}</td>
-                    <td>${d.sehir.kelime}</td>
-                    <td>${d.hayvan.kelime}</td>
-                    <td><strong>${data[id].toplam}</strong></td>
-                </tr>`;
+                html += `<tr><td>${id.substring(0,4)}</td>`;
+                aktifKategoriler.forEach(kat => {
+                    let d = data[id].detay[kat];
+                    html += `<td>${d.kelime} (${d.puan})</td>`;
+                });
+                html += `<td><strong>${data[id].toplam}</strong></td></tr>`;
             }
-            html += "</table>";
+            html += "</table><button onclick='konumaDon()'>Yeni Tur</button>";
             document.getElementById('puan-tablosu-alani').innerHTML = html;
         });
+
+        function konumaDon() {
+            document.getElementById('lobi-alani').style.display = "block";
+            document.getElementById('oyun-alani').innerHTML = "";
+            document.getElementById('bitir-btn').style.display = "none";
+            document.getElementById('puan-tablosu-alani').innerHTML = "";
+        }
     </script>
 </body>
 </html>
