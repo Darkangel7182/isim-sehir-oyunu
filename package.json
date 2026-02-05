@@ -1,0 +1,19 @@
+{
+  "name": "isim-sehir-oyunu-mobile",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Capacitor wrapper for Isim Sehir Oyunu",
+  "scripts": {
+    "cap:sync": "cap sync",
+    "cap:open:android": "cap open android",
+    "cap:open:ios": "cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/core": "^6.1.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.1.2",
+    "@capacitor/android": "^6.1.2",
+    "@capacitor/ios": "^6.1.2"
+  }
+}
