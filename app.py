@@ -1,18 +1,15 @@
 import os
 import random
 from flask import Flask, render_template, request
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit, join_room
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'fenerbahce1907'
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
 
-# Oyunun durumunu takip eden ana değişken
-oyun_verileri = {
-    "mevcut_harf": "",
-    "secilen_kategoriler": ["isim", "sehir", "hayvan"], # Başlangıç varsayılanları
-    "cevaplar": {}
-}
+# Odaların verilerini tutan sözlük
+# Yapı: { 'oda_adi': { 'sifre': '123', 'host': 'sid', 'kategoriler': [], 'harf': '', 'cevaplar': {} } }
+odalar = {}
 
 HARFLER = "ABCÇDEFGĞHİIJKLMNOÖPRSŞTUÜVYZ"
 
@@ -20,51 +17,86 @@ HARFLER = "ABCÇDEFGĞHİIJKLMNOÖPRSŞTUÜVYZ"
 def index():
     return render_template('index.html')
 
-# Lobide kategori seçimlerini senkronize eder
+@socketio.on('oda_olustur')
+def handle_create(data):
+    oda = data['oda']
+    sifre = data['sifre']
+    if oda in odalar:
+        emit('hata', {'mesaj': 'Bu oda zaten var!'})
+    else:
+        odalar[oda] = {
+            'sifre': sifre,
+            'host': request.sid,
+            'kategoriler': ["İsim", "Şehir", "Hayvan"],
+            'harf': '',
+            'cevaplar': {}
+        }
+        join_room(oda)
+        emit('oda_katildi', {'oda': oda, 'is_host': True})
+
+@socketio.on('oda_katil')
+def handle_join(data):
+    oda = data['oda']
+    sifre = data['sifre']
+    if oda in odalar and odalar[oda]['sifre'] == sifre:
+        join_room(oda)
+        emit('oda_katildi', {'oda': oda, 'is_host': False})
+        # Yeni katılan kişiye mevcut kategorileri gönder
+        emit('kategorileri_guncelle', {'kategoriler': odalar[oda]['kategoriler']}, room=oda)
+    else:
+        emit('hata', {'mesaj': 'Oda adı veya şifre hatalı!'})
+
 @socketio.on('kategori_degistir')
 def handle_category_change(data):
-    oyun_verileri["secilen_kategoriler"] = data['kategoriler']
-    emit('kategorileri_guncelle', {'kategoriler': oyun_verileri["secilen_kategoriler"]}, broadcast=True)
+    oda = data['oda']
+    if oda in odalar and odalar[oda]['host'] == request.sid:
+        odalar[oda]['kategoriler'] = data['kategoriler']
+        emit('kategorileri_guncelle', {'kategoriler': odalar[oda]['kategoriler']}, room=oda)
 
 @socketio.on('oyunu_baslat')
-def handle_start():
-    oyun_verileri["mevcut_harf"] = random.choice(HARFLER)
-    oyun_verileri["cevaplar"] = {}
-    emit('yeni_oyun_basladi', {
-        'harf': oyun_verileri["mevcut_harf"],
-        'kategoriler': oyun_verileri["secilen_kategoriler"]
-    }, broadcast=True)
+def handle_start(data):
+    oda = data['oda']
+    if oda in odalar and odalar[oda]['host'] == request.sid:
+        odalar[oda]['harf'] = random.choice(HARFLER)
+        odalar[oda]['cevaplar'] = {}
+        emit('yeni_oyun_basladi', {
+            'harf': odalar[oda]['harf'],
+            'kategoriler': odalar[oda]['kategoriler']
+        }, room=oda)
 
 @socketio.on('oyunu_bitir')
-def handle_finish():
-    emit('geri_sayim_baslat', {'sure': 10}, broadcast=True)
+def handle_finish(data):
+    emit('geri_sayim_baslat', {'sure': 10}, room=data['oda'])
 
 @socketio.on('cevaplari_gonder')
 def handle_answers(data):
+    oda = data['oda']
     oyuncu_id = request.sid
-    oyun_verileri["cevaplar"][oyuncu_id] = data['cevaplar']
-    if len(oyun_verileri["cevaplar"]) >= 2:
-        puanlari_hesapla_ve_yayinla()
+    if oda in odalar:
+        odalar[oda]['cevaplar'][oyuncu_id] = data['cevaplar']
+        # Basitlik için odadaki herkesin gönderdiğini varsayalım veya manuel puanla
+        if len(odalar[oda]['cevaplar']) >= 2:
+            puanla(oda)
 
-def puanlari_hesapla_ve_yayinla():
+def puanla(oda):
     sonuclar = {}
-    kategoriler = oyun_verileri["secilen_kategoriler"]
-    harf = oyun_verileri["mevcut_harf"]
+    kategoriler = odalar[oda]['kategoriler']
+    harf = odalar[oda]['harf']
+    cevaplar_havuzu = odalar[oda]['cevaplar']
     
-    for oyuncu, cevaplar in oyun_verileri["cevaplar"].items():
-        toplam_puan = 0
-        detaylar = {}
+    for oyuncu, cevaplar in cevaplar_havuzu.items():
+        toplam = 0
+        detay = {}
         for kat in kategoriler:
             kelime = cevaplar.get(kat, "").strip().upper()
             puan = 0
             if kelime and kelime.startswith(harf):
-                diger_cevaplar = [v.get(kat, "").strip().upper() for k, v in oyun_verileri["cevaplar"].items() if k != oyuncu]
-                puan = 5 if kelime in diger_cevaplar else 10
-            toplam_puan += puan
-            detaylar[kat] = {"kelime": kelime, "puan": puan}
-        sonuclar[oyuncu] = {"toplam": toplam_puan, "detay": detaylar}
-    
-    emit('puan_durumu', sonuclar, broadcast=True)
+                digerleri = [v.get(kat, "").strip().upper() for k, v in cevaplar_havuzu.items() if k != oyuncu]
+                puan = 5 if kelime in digerleri else 10
+            toplam += puan
+            detay[kat] = {"kelime": kelime, "puan": puan}
+        sonuclar[oyuncu] = {"toplam": toplam, "detay": detay}
+    emit('puan_durumu', sonuclar, room=oda)
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
