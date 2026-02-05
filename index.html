@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>İsim Şehir Hayvan - Online</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; background-color: #f4f4f9; }
+        .container { margin-top: 50px; }
+        #harf-alani { font-size: 80px; color: #2c3e50; margin: 20px; font-weight: bold; }
+        input { padding: 10px; margin: 5px; border-radius: 5px; border: 1px solid #ddd; }
+        button { padding: 10px 20px; cursor: pointer; background-color: #3498db; color: white; border: none; border-radius: 5px; font-weight: bold; }
+        button:disabled { background-color: #bdc3c7; }
+        #sonuc-tablosu { margin: 20px auto; border-collapse: collapse; background: white; }
+        th, td { padding: 10px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>İsim Şehir Hayvan</h1>
+        <button onclick="baslat()">YENİ OYUN BAŞLAT</button>
+        <div id="harf-alani">?</div>
+
+        <div id="oyun-alani">
+            <input type="text" class="cevap" placeholder="İsim" disabled>
+            <input type="text" class="cevap" placeholder="Şehir" disabled>
+            <input type="text" class="cevap" placeholder="Hayvan" disabled>
+            <br><br>
+            <button id="bitir-btn" onclick="bitir()" disabled>BİTTİ!</button>
+        </div>
+
+        <div id="puan-tablosu-alani"></div>
+    </div>
+
+    <script>
+        var socket = io();
+
+        function baslat() {
+            socket.emit('oyunu_baslat');
+        }
+
+        function bitir() {
+            socket.emit('oyunu_bitir');
+        }
+
+        socket.on('yeni_oyun_basladi', function(data) {
+            document.getElementById('harf-alani').innerText = data.harf;
+            document.getElementById('puan-tablosu-alani').innerHTML = "";
+            document.getElementById('bitir-btn').disabled = false;
+            
+            var inputs = document.querySelectorAll('.cevap');
+            inputs.forEach(input => {
+                input.value = "";
+                input.disabled = false;
+            });
+        });
+
+        socket.on('herkese_durdur', function() {
+            var inputs = document.querySelectorAll('.cevap');
+            var cevaplarim = {
+                'isim': inputs[0].value,
+                'sehir': inputs[1].value,
+                'hayvan': inputs[2].value
+            };
+
+            inputs.forEach(input => input.disabled = true);
+            document.getElementById('bitir-btn').disabled = true;
+
+            socket.emit('cevaplari_gonder', {cevaplar: cevaplarim});
+        });
+
+        socket.on('puan_durumu', function(data) {
+            let html = "<h3>Sonuçlar</h3><table id='sonuc-tablosu'><tr><th>Oyuncu</th><th>İsim</th><th>Şehir</th><th>Hayvan</th><th>Toplam</th></tr>";
+            for (let id in data) {
+                let d = data[id].detay;
+                html += `<tr>
+                    <td>${id.substring(0,5)}</td>
+                    <td>${d.isim.kelime} (${d.isim.puan})</td>
+                    <td>${d.sehir.kelime} (${d.sehir.puan})</td>
+                    <td>${d.hayvan.kelime} (${d.hayvan.puan})</td>
+                    <td><strong>${data[id].toplam}</strong></td>
+                </tr>`;
+            }
+            html += "</table>";
+            document.getElementById('puan-tablosu-alani').innerHTML = html;
+        });
+    </script>
+</body>
+</html>
