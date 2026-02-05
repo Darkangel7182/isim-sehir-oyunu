@@ -86,12 +86,20 @@
         function odaOlustur() {
             myRoom = document.getElementById('room-input').value;
             let pass = document.getElementById('pass-input').value;
+            if(!myRoom.trim() || !pass.trim()) {
+                alert("Oda adı ve şifre zorunludur!");
+                return;
+            }
             socket.emit('oda_olustur', {oda: myRoom, sifre: pass});
         }
 
         function odaKatil() {
             myRoom = document.getElementById('room-input').value;
             let pass = document.getElementById('pass-input').value;
+            if(!myRoom.trim() || !pass.trim()) {
+                alert("Oda adı ve şifre zorunludur!");
+                return;
+            }
             socket.emit('oda_katil', {oda: myRoom, sifre: pass});
         }
 
@@ -100,6 +108,7 @@
             document.getElementById('display-room').innerText = data.oda;
             showScreen('lobby-screen');
             if(isHost) {
+                activeCats = ["İsim", "Şehir", "Hayvan"];
                 renderHostCats();
             } else {
                 document.getElementById('host-controls').style.display = "none";
@@ -114,7 +123,8 @@
             const div = document.getElementById('cat-list');
             div.innerHTML = "";
             allCats.forEach(c => {
-                div.innerHTML += `<label><input type="checkbox" class="c-box" value="${c}" onchange="syncCats()"> ${c}</label> `;
+                const isChecked = activeCats.includes(c) ? "checked" : "";
+                div.innerHTML += `<label><input type="checkbox" class="c-box" value="${c}" onchange="syncCats()" ${isChecked}> ${c}</label> `;
             });
         }
 
@@ -144,6 +154,10 @@
         });
 
         function bitirSinyali() { socket.emit('oyunu_bitir', {oda: myRoom}); }
+
+        socket.on('bitirildi', () => {
+            document.getElementById('bitir-btn').disabled = true;
+        });
 
         socket.on('geri_sayim_baslat', data => {
             let sec = data.sure;
