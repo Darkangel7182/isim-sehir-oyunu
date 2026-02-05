@@ -55,3 +55,11 @@ if __name__ == '__main__':
     # Render'da portu bu şekilde almak mecburidir
     port = int(os.environ.get("PORT", 5000))
     socketio.run(app, host='0.0.0.0', port=port)
+# ... önceki kodlar aynı ...
+
+@socketio.on('oyunu_bitir')
+def handle_finish():
+    # Birisi bitirdiğinde herkese "10 saniyeniz başladı" sinyali gönder
+    emit('geri_sayim_baslat', {'sure': 10}, broadcast=True)
+
+# ... geri kalan cevaplari_gonder ve puanlama kısmı aynı ...
