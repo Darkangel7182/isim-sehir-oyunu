@@ -525,7 +525,6 @@ Dilan
 Dilara
 Dilay
 Diler
-Dilhan
 Dilek
 Dilruba
 Döndü
@@ -535,7 +534,6 @@ Dürdane
 Dürriye
 Dicle
 Dolunay
-Destan
 Derin
 Diclehan
 Dilberay
@@ -547,7 +545,6 @@ Ela
 Elçin
 Elif
 Elmas
-Elvan
 Emel
 Emine
 Enise
@@ -636,7 +633,6 @@ Hadise
 Hanzade
 Handesu
 Hansa
-Handan
 Henna
 Ilgın
 Işık
@@ -670,7 +666,6 @@ Kamuran
 Kevser
 Kumru
 Kısmet
-Kıymet
 Kiraz
 Lale
 Lamia
@@ -737,7 +732,7 @@ Oya
 Özge
 Özlem
 Özlen
-Öznur	
+Öznur
 Parla
 Pakize
 Pelin
@@ -855,3 +850,27 @@ Züleyha
 Zeliha
 Zümrüt
 Zübeyr
+Ada
+Ahu
+Ayla
+Ayşe
+Azra
+Bahar
+Begüm
+Belgin
+Beren
+Beril
+Beyza
+Esra
+Ezgi
+Gülsüm
+Havva
+Hicran
+Kübra
+Mina
+Nilay
+Nilüfer
+Nisanur
+Nursena
+Sude
+Sultan
