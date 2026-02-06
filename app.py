@@ -127,5 +127,14 @@ def puanla(oda):
         sonuclar[sid] = {"toplam": toplam, "detay": detay, "nickname": isimler.get(sid, "Bilinmiyor")}
     emit('puan_durumu', sonuclar, room=oda)
 
+# Mevcut bekleyen_oyuncular listesinin altına veya uygun bir yere ekle
+@socketio.on('iptal_et')
+def handle_cancel_matchmaking():
+    global bekleyen_oyuncular
+    # Oyuncunun sid'ini listeden filtreleyerek temizliyoruz
+    bekleyen_oyuncular = [p for p in bekleyen_oyuncular if p['sid'] != request.sid]
+    print(f"Oyuncu sıradan çıktı: {request.sid}")
+    emit('eslesme_iptal', {'mesaj': 'Arama iptal edildi.'})
+
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
