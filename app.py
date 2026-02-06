@@ -9,57 +9,91 @@ app.config['SECRET_KEY'] = 'fenerbahce1907'
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 odalar = {}
-bekleyen_oyuncular = [] 
+bekleyen_oyuncular = [] # Matchmaking havuzu
 HARFLER = "ABCÇDEFGĞHİIJKLMNOÖPRSŞTUÜVYZ"
 
 @socketio.on('oda_olustur')
 def handle_create(data):
-    oda, sifre, nick = data['oda'], data['sifre'], data.get('nickname', 'Anonim')
+    oda = data['oda']
+    sifre = data['sifre']
+    nick = data.get('nickname', 'Anonim')
+    # Varsayılan kategorilerle odayı kur
     odalar[oda] = {
         'sifre': sifre, 'host': request.sid, 'harf': '',
         'kategoriler': ["İsim", "Şehir", "Hayvan"],
         'oyuncular': {request.sid: nick}, 'cevaplar': {}, 'puanlandi': False
     }
     join_room(oda)
-    emit('oda_katildi', {'oda': oda, 'is_host': True})
+    # Lobiye girerken mevcut kategorileri de gönder
+    emit('oda_katildi', {
+        'oda': oda, 
+        'is_host': True, 
+        'kategoriler': odalar[oda]['kategoriler']
+    })
 
 @socketio.on('oda_katil')
 def handle_join(data):
-    oda, sifre, nick = data['oda'], data['sifre'], data.get('nickname', 'Misafir')
+    oda = data['oda']
+    sifre = data['sifre']
+    nick = data.get('nickname', 'Misafir')
     if oda in odalar and odalar[oda]['sifre'] == sifre:
         join_room(oda)
         odalar[oda]['oyuncular'][request.sid] = nick
-        emit('oda_katildi', {'oda': oda, 'is_host': False})
+        # Katılan kişiye odanın GÜNCEL kategorilerini gönderiyoruz
+        emit('oda_katildi', {
+            'oda': oda, 
+            'is_host': False, 
+            'kategoriler': odalar[oda]['kategoriler']
+        })
+        # Odadaki diğer herkese de birinin katıldığını ve kategorileri bildir
         emit('kategorileri_guncelle', {'kategoriler': odalar[oda]['kategoriler']}, room=oda)
     else:
-        emit('hata', {'mesaj': 'Oda bulunamadı veya şifre yanlış!'})
+        emit('hata', {'mesaj': 'Oda adı veya şifre hatalı!'})
+
+@socketio.on('kategori_degistir')
+def handle_category_change(data):
+    oda = data['oda']
+    if oda in odalar and odalar[oda]['host'] == request.sid:
+        odalar[oda]['kategoriler'] = data['kategoriler']
+        # Tüm odaya yeni kategorileri yayınla
+        emit('kategorileri_guncelle', {'kategoriler': odalar[oda]['kategoriler']}, room=oda)
 
 @socketio.on('hemen_oyna')
 def handle_matchmaking(data):
     nick = data.get('nickname', 'Oyuncu')
     bekleyen_oyuncular.append({'sid': request.sid, 'nick': nick})
-    emit('eslesme_bekleniyor', {'mesaj': 'Sıraya girildi...'})
+    emit('eslesme_bekleniyor', {'mesaj': 'Rakip aranıyor...'})
 
     if len(bekleyen_oyuncular) >= 2:
         p1 = bekleyen_oyuncular.pop(0)
         p2 = bekleyen_oyuncular.pop(0)
         match_room = f"match_{uuid.uuid4().hex[:8]}"
         
+        # Hemen oyna için standart geniş kategori seti
+        match_cats = ["İsim", "Şehir", "Hayvan", "Bitki"]
         odalar[match_room] = {
             'sifre': None, 'host': p1['sid'], 'harf': random.choice(HARFLER),
-            'kategoriler': ["İsim", "Şehir", "Hayvan"],
+            'kategoriler': match_cats,
             'oyuncular': {p1['sid']: p1['nick'], p2['sid']: p2['nick']},
             'cevaplar': {}, 'puanlandi': False
         }
         for p in [p1, p2]: join_room(match_room, sid=p['sid'])
-        emit('eslesme_tamam', {'oda': match_room, 'harf': odalar[match_room]['harf'], 'kategoriler': odalar[match_room]['kategoriler']}, room=match_room)
+        # Eşleşme tamamlandığında kategorileri bas
+        emit('eslesme_tamam', {
+            'oda': match_room, 'harf': odalar[match_room]['harf'], 
+            'kategoriler': match_cats
+        }, room=match_room)
 
 @socketio.on('oyunu_baslat')
 def handle_start(data):
     oda = data['oda']
     if oda in odalar and odalar[oda]['host'] == request.sid:
+        # Odada seçili olan GÜNCEL kategorileri kullanarak başlat
         odalar[oda].update({'harf': random.choice(HARFLER), 'cevaplar': {}, 'puanlandi': False})
-        emit('yeni_oyun_basladi', {'harf': odalar[oda]['harf'], 'kategoriler': odalar[oda]['kategoriler']}, room=oda)
+        emit('yeni_oyun_basladi', {
+            'harf': odalar[oda]['harf'], 
+            'kategoriler': odalar[oda]['kategoriler']
+        }, room=oda)
 
 @socketio.on('oyunu_bitir')
 def handle_finish(data):
