@@ -79,3 +79,109 @@ Van
 Yalova
 Yozgat
 Zonguldak
+Amsterdam
+Atina
+Barcelona
+Batum
+Belgrad
+Berlin
+Beyrut
+Brüksel
+Budapeşte
+Bükreş
+Buenos Aires
+Dubai
+Dublin
+Floransa
+Frankfurt
+Gazze
+Hamburg
+Havana
+Helsinki
+Hong Kong
+İslamabad
+Kahire
+Kazan
+Kiev
+Kopenhag
+Krakov
+Kuala Lumpur
+Kudüs
+Londra
+Los Angeles
+Madrid
+Meksiko
+Milano
+Minsk
+Moskova
+New York
+Nice
+Oslo
+Paris
+Pekin
+Prag
+Riga
+Roma
+Seul
+Şanghay
+Stockholm
+Sydney
+Tahran
+Tokyo
+Toronto
+Viyana
+Varşova
+Venedik
+Yokohama
+Zagrep
+Zürih
+Abu Dabi
+Akra
+Almatı
+Atlanta
+Auckland
+Bangkok
+Bengaluru
+Bogota
+Boston
+Brisbane
+Chicago
+Dallas
+Delhi
+Denver
+Detroit
+Doha
+Edinburgh
+Hanoi
+Houston
+Jakarta
+Johannesburg
+Kalküta
+Kapstadt
+Karachi
+Las Vegas
+Lizbon
+Manchester
+Melbourne
+Miami
+Montreal
+Münih
+Newcastle
+Osaka
+Ottawa
+Philadelphia
+Phoenix
+Pittsburgh
+Porto
+Rio de Janeiro
+Riyad
+San Diego
+San Francisco
+Santiago
+Seattle
+Singapur
+St. Petersburg
+Valensiya
+Vancouver
+Washington
+Wellington

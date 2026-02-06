@@ -266,3 +266,63 @@ yengeç
 zargana
 zebra
 zürafa
+aba balığı
+akrepgiller
+alaca baykuş
+albatros
+alık kuşu
+alpaka
+anakonda
+angut
+armadillo
+ayı
+balıkçıl
+baykuş
+boz ayı
+bizon
+capybara
+ceviz faresi
+civciv
+deve kuşu
+domuz
+doru at
+donlu kuş
+dulavrat otu kelebeği
+dülger balığı
+düve
+gergedan
+guguk kuşu
+gümüş balığı
+hamster
+hüthüt
+ıstakoz
+iguana
+ince kırlangıç
+ispinoz
+istiridye
+kakadu
+karınca yiyen
+kartal
+kertenkele
+lüfer
+mamut
+martı
+misk kedisi
+mürekkep balığı
+panda
+panter
+penguen
+piton
+sazangiller
+sivrisinek
+sinek
+şempanze
+tazı
+toygar
+turna kuşu
+tukan
+vahşi at
+yaban domuzu
+yak
+yunus
+yusufçuk
