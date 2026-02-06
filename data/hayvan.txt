@@ -134,6 +134,7 @@ jakana
 jibon
 kadifebalığı
 kanarya
+karga
 kanatlıtuygun
 kangalbalığı
 kanguru
@@ -183,6 +184,7 @@ kurdelebalığı
 kurt
 kurtkıyan
 kuskus
+kuş
 kutupayısı
 kutuptilkisi
 kuyrukkakan
