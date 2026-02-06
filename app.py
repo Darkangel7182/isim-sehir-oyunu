@@ -4,54 +4,47 @@ from flask import Flask, request
 from flask_socketio import SocketIO, emit, join_room
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'fenerbahce1907' #
+app.config['SECRET_KEY'] = 'fenerbahce1907'
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 odalar = {}
-HARFLER = "ABCÇDEFGĞHİIJKLMNOÖPRSŞTUÜVYZ" #
+HARFLER = "ABCÇDEFGĞHİIJKLMNOÖPRSŞTUÜVYZ"
 
 @socketio.on('oda_olustur')
 def handle_create(data):
     oda = data['oda']
     sifre = data['sifre']
-    # Odayı sıfırlayarak oluştur (Yeniden başlatma desteği)
+    nick = data.get('nickname', 'Anonim') # Nickname alımı
     odalar[oda] = {
-        'sifre': sifre, 'host': request.sid, 'harf': '',
+        'sifre': sifre,
+        'host': request.sid,
         'kategoriler': ["İsim", "Şehir", "Hayvan"],
-        'cevaplar': {}, 'puanlandi': False
+        'harf': '',
+        'cevaplar': {},
+        'oyuncular': {request.sid: nick}, # SID -> Nickname eşleşmesi
+        'puanlandi': False
     }
     join_room(oda)
     emit('oda_katildi', {'oda': oda, 'is_host': True})
 
 @socketio.on('oda_katil')
 def handle_join(data):
-    oda, sifre = data['oda'], data['sifre']
+    oda = data['oda']
+    sifre = data['sifre']
+    nick = data.get('nickname', 'Misafir')
     if oda in odalar and odalar[oda]['sifre'] == sifre:
         join_room(oda)
+        odalar[oda]['oyuncular'][request.sid] = nick # Yeni oyuncuyu kaydet
         emit('oda_katildi', {'oda': oda, 'is_host': False})
         emit('kategorileri_guncelle', {'kategoriler': odalar[oda]['kategoriler']}, room=oda)
     else:
-        emit('hata', {'mesaj': 'Hatalı oda adı veya şifre!'})
-
-@socketio.on('kategori_degistir')
-def handle_category_change(data):
-    oda = data['oda']
-    if oda in odalar and odalar[oda]['host'] == request.sid:
-        odalar[oda]['kategoriler'] = data['kategoriler']
-        emit('kategorileri_guncelle', {'kategoriler': odalar[oda]['kategoriler']}, room=oda)
-
-@socketio.on('oyunu_baslat')
-def handle_start(data):
-    oda = data['oda']
-    if oda in odalar and odalar[oda]['host'] == request.sid:
-        odalar[oda].update({'harf': random.choice(HARFLER), 'cevaplar': {}, 'puanlandi': False})
-        emit('yeni_oyun_basladi', {'harf': odalar[oda]['harf'], 'kategoriler': odalar[oda]['kategoriler']}, room=oda)
+        emit('hata', {'mesaj': 'Oda adı veya şifre hatalı!'})
 
 @socketio.on('oyunu_bitir')
 def handle_finish(data):
     oda = data['oda']
     emit('geri_sayim_baslat', {'sure': 10}, room=oda)
-    socketio.sleep(12) # Cevapların gelmesi için güvenli bekleme süresi
+    socketio.sleep(12)
     if oda in odalar and not odalar[oda]['puanlandi']:
         puanla(oda)
         odalar[oda]['puanlandi'] = True
@@ -64,21 +57,29 @@ def handle_answers(data):
 
 def puanla(oda):
     sonuclar = {}
-    kats = odalar[oda]['kategoriler']
+    kategoriler = odalar[oda]['kategoriler']
     harf = odalar[oda]['harf']
-    havuz = odalar[oda]['cevaplar']
+    cevaplar_havuzu = odalar[oda]['cevaplar']
+    oyuncu_isimleri = odalar[oda]['oyuncular']
     
-    for oyuncu, cevaplar in havuz.items():
-        toplam, detay = 0, {}
-        for k in kats:
-            kelime = cevaplar.get(k, "").strip().upper()
+    for oyuncu_sid, cevaplar in cevaplar_havuzu.items():
+        toplam = 0
+        detay = {}
+        for kat in kategoriler:
+            kelime = cevaplar.get(kat, "").strip().upper()
             puan = 0
             if kelime and kelime.startswith(harf):
-                digerleri = [v.get(k, "").strip().upper() for sid, v in havuz.items() if sid != oyuncu]
-                puan = 5 if kelime in digerleri else 10 # Aynı kelimeye 5, benzersize 10
+                digerleri = [v.get(kat, "").strip().upper() for sid, v in cevaplar_havuzu.items() if sid != oyuncu_sid]
+                puan = 5 if kelime in digerleri else 10
             toplam += puan
-            detay[k] = {"kelime": kelime, "puan": puan}
-        sonuclar[oyuncu] = {"toplam": toplam, "detay": detay}
+            detay[kat] = {"kelime": kelime, "puan": puan}
+        
+        # Sonuçlara oyuncu ismini de ekliyoruz
+        sonuclar[oyuncu_sid] = {
+            "toplam": toplam, 
+            "detay": detay, 
+            "nickname": oyuncu_isimleri.get(oyuncu_sid, "Bilinmiyor")
+        }
     emit('puan_durumu', sonuclar, room=oda)
 
 if __name__ == '__main__':
