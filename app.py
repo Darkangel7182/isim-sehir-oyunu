@@ -70,11 +70,15 @@ def handle_create(data):
     oda, sifre, nick = data['oda'], data['sifre'], data.get('nickname', 'Anonim')
     odalar[oda] = {
         'sifre': sifre, 'host': request.sid, 'harf': '',
-        'kategoriler': ["İsim", "Şehir", "Hayvan", "Bitki", "Eşya"], # Varsayılan genişletildi
+        'kategoriler': ["İsim", "Şehir", "Hayvan", "Bitki", "Eşya"],
         'oyuncular': {request.sid: nick}, 'cevaplar': {}, 'puanlandi': False
     }
     join_room(oda)
+    
+    # KENDİNE LİSTEYİ GÖNDER (HOST KENDİNİ GÖRSÜN)
+    oyuncu_listesi = list(odalar[oda]['oyuncular'].values())
     emit('oda_katildi', {'oda': oda, 'is_host': True, 'kategoriler': odalar[oda]['kategoriler']})
+    emit('oyuncular_guncellendi', {'oyuncular': oyuncu_listesi}) # <-- YENİ EKLENDİ
 
 @socketio.on('oda_katil')
 def handle_join(data):
@@ -82,8 +86,13 @@ def handle_join(data):
     if oda in odalar and odalar[oda]['sifre'] == sifre:
         join_room(oda)
         odalar[oda]['oyuncular'][request.sid] = nick
+        
+        # HERKESE GÜNCEL LİSTEYİ GÖNDER
+        oyuncu_listesi = list(odalar[oda]['oyuncular'].values())
+        
         emit('oda_katildi', {'oda': oda, 'is_host': False, 'kategoriler': odalar[oda]['kategoriler']})
         emit('kategorileri_guncelle', {'kategoriler': odalar[oda]['kategoriler']}, room=oda)
+        emit('oyuncular_guncellendi', {'oyuncular': oyuncu_listesi}, room=oda) # <-- YENİ EKLENDİ (Tüm odaya)
     else:
         emit('hata', {'mesaj': 'Hatalı giriş!'})
 
@@ -168,3 +177,4 @@ def puanla(oda):
 
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
+
