@@ -9,7 +9,7 @@ app.config['SECRET_KEY'] = 'fenerbahce1907'
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 odalar = {}
-bekleyen_oyuncular = [] # Matchmaking sırası
+bekleyen_oyuncular = [] 
 HARFLER = "ABCÇDEFGĞHİIJKLMNOÖPRSŞTUÜVYZ"
 
 @socketio.on('oda_olustur')
@@ -31,37 +31,28 @@ def handle_join(data):
         odalar[oda]['oyuncular'][request.sid] = nick
         emit('oda_katildi', {'oda': oda, 'is_host': False})
         emit('kategorileri_guncelle', {'kategoriler': odalar[oda]['kategoriler']}, room=oda)
+    else:
+        emit('hata', {'mesaj': 'Oda bulunamadı veya şifre yanlış!'})
 
 @socketio.on('hemen_oyna')
 def handle_matchmaking(data):
     nick = data.get('nickname', 'Oyuncu')
-    # Oyuncuyu sıraya ekle
     bekleyen_oyuncular.append({'sid': request.sid, 'nick': nick})
-    emit('eslesme_bekleniyor', {'mesaj': 'Rakip aranıyor...'})
+    emit('eslesme_bekleniyor', {'mesaj': 'Sıraya girildi...'})
 
     if len(bekleyen_oyuncular) >= 2:
-        # İki oyuncuyu sıradan çıkar
         p1 = bekleyen_oyuncular.pop(0)
         p2 = bekleyen_oyuncular.pop(0)
-        
-        # Rastgele bir oda ID'si oluştur
         match_room = f"match_{uuid.uuid4().hex[:8]}"
+        
         odalar[match_room] = {
             'sifre': None, 'host': p1['sid'], 'harf': random.choice(HARFLER),
-            'kategoriler': ["İsim", "Şehir", "Hayvan", "Bitki"],
+            'kategoriler': ["İsim", "Şehir", "Hayvan"],
             'oyuncular': {p1['sid']: p1['nick'], p2['sid']: p2['nick']},
             'cevaplar': {}, 'puanlandi': False
         }
-        
-        # Her iki oyuncuyu odaya al ve başlat
-        for p in [p1, p2]:
-            join_room(match_room, sid=p['sid'])
-        
-        emit('eslesme_tamam', {
-            'oda': match_room, 
-            'harf': odalar[match_room]['harf'], 
-            'kategoriler': odalar[match_room]['kategoriler']
-        }, room=match_room)
+        for p in [p1, p2]: join_room(match_room, sid=p['sid'])
+        emit('eslesme_tamam', {'oda': match_room, 'harf': odalar[match_room]['harf'], 'kategoriler': odalar[match_room]['kategoriler']}, room=match_room)
 
 @socketio.on('oyunu_baslat')
 def handle_start(data):
