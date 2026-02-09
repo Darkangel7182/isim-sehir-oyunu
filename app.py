@@ -65,7 +65,7 @@ def kelime_gecerli_mi(kategori, kelime, harf):
 
 # --- STANDART SOCKET EVENTLERİ ---
 
-@socketio.on('oda_olustur')
+@socketio.on('create_room')
 def handle_create(data):
     oda, sifre, nick = data['oda'], data['sifre'], data.get('nickname', 'Anonim')
     odalar[oda] = {
@@ -80,7 +80,7 @@ def handle_create(data):
     emit('oda_katildi', {'oda': oda, 'is_host': True, 'kategoriler': odalar[oda]['kategoriler']})
     emit('oyuncular_guncellendi', {'oyuncular': oyuncu_listesi}) # <-- YENİ EKLENDİ
 
-@socketio.on('oda_katil')
+@socketio.on('join_room')
 def handle_join(data):
     oda, sifre, nick = data['oda'], data['sifre'], data.get('nickname', 'Misafir')
     if oda in odalar and odalar[oda]['sifre'] == sifre:
@@ -96,7 +96,7 @@ def handle_join(data):
     else:
         emit('hata', {'mesaj': 'Hatalı giriş!'})
 
-@socketio.on('hemen_oyna')
+@socketio.on('find_match')
 def handle_matchmaking(data):
     nick = data.get('nickname', 'Oyuncu')
     bekleyen_oyuncular.append({'sid': request.sid, 'nick': nick})
@@ -119,25 +119,25 @@ def handle_matchmaking(data):
         for p in [p1, p2]: join_room(match_room, sid=p['sid'])
         emit('eslesme_tamam', {'oda': match_room, 'harf': odalar[match_room]['harf'], 'kategoriler': secilen_kats}, room=match_room)
 
-@socketio.on('iptal_et')
+@socketio.on('stop_matchmaking')
 def handle_cancel():
     global bekleyen_oyuncular
     bekleyen_oyuncular = [p for p in bekleyen_oyuncular if p['sid'] != request.sid]
 
-@socketio.on('oyunu_baslat')
+@socketio.on('start_game')
 def handle_start(data):
     oda = data['oda']
     if oda in odalar and odalar[oda]['host'] == request.sid:
         odalar[oda].update({'harf': random.choice(HARFLER), 'cevaplar': {}, 'puanlandi': False})
         emit('yeni_oyun_basladi', {'harf': odalar[oda]['harf'], 'kategoriler': odalar[oda]['kategoriler']}, room=oda)
 
-@socketio.on('cevaplari_gonder')
+@socketio.on('submit_answers')
 def handle_answers(data):
     oda = data['oda']
     if oda in odalar:
         odalar[oda]['cevaplar'][request.sid] = data['cevaplar']
 
-@socketio.on('oyunu_bitir')
+@socketio.on('finish_early')
 def handle_finish(data):
     oda = data['oda']
     emit('geri_sayim_baslat', {'sure': 10}, room=oda)
@@ -146,7 +146,7 @@ def handle_finish(data):
         puanla(oda)
         odalar[oda]['puanlandi'] = True
 
-@socketio.on('kategori_degistir')
+@socketio.on('update_categories')
 def handle_category_change(data):
     oda = data['oda']
     if oda in odalar and odalar[oda]['host'] == request.sid:
@@ -177,4 +177,5 @@ def puanla(oda):
 
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
+
 
