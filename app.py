@@ -28,8 +28,11 @@ def verileri_yukle():
     base_path = os.path.join(os.path.dirname(__file__), 'data')
     
     if not os.path.exists(base_path):
-        os.makedirs(base_path)
-        print("UYARI: 'data' klasörü bulunamadı, oluşturuldu.")
+        try:
+            os.makedirs(base_path)
+            print("UYARI: 'data' klasörü bulunamadı, oluşturuldu.")
+        except:
+            pass
 
     for kategori, dosya_adi in dosya_eslesmeleri.items():
         dosya_yolu = os.path.join(base_path, dosya_adi)
@@ -54,13 +57,13 @@ def kelime_gecerli_mi(kategori, kelime, harf):
         
     return kelime in KELIME_HAVUZU.get(kategori, set())
 
-# --- SOCKET EVENTLERİ (FLUTTER UYUMLU) ---
+# --- SOCKET EVENTLERİ (FLUTTER İLE TAM UYUMLU) ---
 
-@socketio.on('create_room')
+@socketio.on('oda_olustur')  # Flutter: oda_olustur gönderiyor
 def handle_create(data):
-    # Flutter'dan gelen keyler: roomName, password, nickname
-    room_name = data['roomName']
-    password = data['password']
+    # Veri anahtarlarını Flutter'a göre alıyoruz
+    room_name = data.get('oda') or data.get('roomName')
+    password = data.get('sifre') or data.get('password')
     nick = data.get('nickname', 'Anonim')
 
     odalar[room_name] = {
@@ -74,21 +77,21 @@ def handle_create(data):
     }
     join_room(room_name)
     
-    # Host'a bildirim (room_joined)
-    emit('room_joined', {
-        'roomName': room_name, 
-        'isHost': True, 
-        'categories': odalar[room_name]['categories']
+    # Host'a bildirim (oda_katildi)
+    emit('oda_katildi', {
+        'oda': room_name, 
+        'is_host': True, 
+        'kategoriler': odalar[room_name]['categories']
     })
     
-    # Oyuncu listesini güncelle (update_players)
+    # Oyuncu listesini güncelle
     player_list = list(odalar[room_name]['players'].values())
-    emit('update_players', {'players': player_list})
+    emit('oyuncular_guncellendi', {'oyuncular': player_list})
 
-@socketio.on('join_room')
+@socketio.on('oda_katil') # Flutter: oda_katil gönderiyor
 def handle_join(data):
-    room_name = data['roomName']
-    password = data['password']
+    room_name = data.get('oda') or data.get('roomName')
+    password = data.get('sifre') or data.get('password')
     nick = data.get('nickname', 'Misafir')
 
     if room_name in odalar and odalar[room_name]['password'] == password:
@@ -98,26 +101,25 @@ def handle_join(data):
         player_list = list(odalar[room_name]['players'].values())
         
         # Katılan kişiye bildirim
-        emit('room_joined', {
-            'roomName': room_name, 
-            'isHost': False, 
-            'categories': odalar[room_name]['categories']
+        emit('oda_katildi', {
+            'oda': room_name, 
+            'is_host': False, 
+            'kategoriler': odalar[room_name]['categories']
         })
         
-        # Odaya kategori bilgisini güncelle (update_categories) - Mevcut durumu görmek için
-        emit('update_categories', {'categories': odalar[room_name]['categories']}, room=room_name)
+        # Kategorileri güncelle
+        emit('kategorileri_guncelle', {'kategoriler': odalar[room_name]['categories']}, room=room_name)
         
-        # Tüm odaya oyuncu listesi (update_players)
-        emit('update_players', {'players': player_list}, room=room_name)
+        # Tüm odaya oyuncu listesi
+        emit('oyuncular_guncellendi', {'oyuncular': player_list}, room=room_name)
     else:
         emit('hata', {'mesaj': 'Hatalı giriş veya oda yok!'})
 
-@socketio.on('find_match')
+@socketio.on('hemen_oyna') # Flutter: hemen_oyna gönderiyor
 def handle_matchmaking(data):
     nick = data.get('nickname', 'Oyuncu')
     bekleyen_oyuncular.append({'sid': request.sid, 'nick': nick})
-    # Flutter tarafında bu event için bir dinleyici yoktu ama log için kalabilir
-    emit('match_waiting', {'mesaj': 'Rakip aranıyor...'})
+    emit('eslesme_bekleniyor', {'mesaj': 'Rakip aranıyor...'})
 
     if len(bekleyen_oyuncular) >= 2:
         p1 = bekleyen_oyuncular.pop(0)
@@ -140,62 +142,61 @@ def handle_matchmaking(data):
         for p in [p1, p2]: 
             join_room(match_room, sid=p['sid'])
             
-        # Flutter: onMatchFound -> 'match_found'
-        emit('match_found', {
-            'roomName': match_room, 
-            'letter': odalar[match_room]['letter'], 
-            'categories': selected_cats
+        emit('eslesme_tamam', {
+            'oda': match_room, 
+            'harf': odalar[match_room]['letter'], 
+            'kategoriler': selected_cats
         }, room=match_room)
 
-@socketio.on('stop_matchmaking')
+@socketio.on('iptal_et')
 def handle_cancel():
     global bekleyen_oyuncular
     bekleyen_oyuncular = [p for p in bekleyen_oyuncular if p['sid'] != request.sid]
 
-@socketio.on('start_game')
+@socketio.on('oyunu_baslat') # Flutter: oyunu_baslat
 def handle_start(data):
-    room_name = data['roomName']
+    room_name = data.get('oda')
     if room_name in odalar and odalar[room_name]['host'] == request.sid:
         odalar[room_name].update({
             'letter': random.choice(HARFLER), 
             'answers': {}, 
             'scored': False
         })
-        # Flutter: onGameStarted -> 'game_started'
-        emit('game_started', {
-            'letter': odalar[room_name]['letter'], 
-            'categories': odalar[room_name]['categories']
+        
+        # Flutter 'yeni_oyun_basladi' eventini ve 'harf' keyini bekliyor
+        emit('yeni_oyun_basladi', {
+            'harf': odalar[room_name]['letter'], 
+            'kategoriler': odalar[room_name]['categories']
         }, room=room_name)
 
-@socketio.on('submit_answers')
+@socketio.on('cevaplari_gonder') # Flutter: cevaplari_gonder
 def handle_answers(data):
-    room_name = data['roomName']
+    room_name = data.get('oda')
+    # Flutter 'cevaplar' keyini gönderiyor
     if room_name in odalar:
-        # data['answers'] formatı Flutter'dan Map<String, String> geliyor
-        odalar[room_name]['answers'][request.sid] = data['answers']
+        odalar[room_name]['answers'][request.sid] = data['cevaplar']
 
-@socketio.on('finish_early')
+@socketio.on('oyunu_bitir') # Flutter: oyunu_bitir
 def handle_finish(data):
-    room_name = data['roomName']
-    # Flutter: onCountdownStarted -> 'countdown'
-    emit('countdown', {'duration': 10}, room=room_name)
-    socketio.sleep(12) # Gecikme payı
+    room_name = data.get('oda')
+    # Flutter 'geri_sayim_baslat' eventini ve 'sure' keyini bekliyor
+    emit('geri_sayim_baslat', {'sure': 10}, room=room_name)
+    socketio.sleep(12) 
+    
     if room_name in odalar and not odalar[room_name]['scored']:
         puanla(room_name)
         odalar[room_name]['scored'] = True
 
-@socketio.on('update_categories')
+@socketio.on('kategori_degistir') # Flutter: kategori_degistir
 def handle_category_change(data):
-    room_name = data['roomName']
+    room_name = data.get('oda')
     if room_name in odalar and odalar[room_name]['host'] == request.sid:
-        odalar[room_name]['categories'] = data['categories']
-        # Flutter: onCategoriesChanged -> 'update_categories'
-        emit('update_categories', {'categories': odalar[room_name]['categories']}, room=room_name)
+        odalar[room_name]['categories'] = data['kategoriler']
+        emit('kategorileri_guncelle', {'kategoriler': odalar[room_name]['categories']}, room=room_name)
 
 @socketio.on('disconnect')
 def handle_disconnect():
-    # Basit bir temizlik mantığı
-    # Gerçek projede oyuncu odadan düştüğünde diğerlerine haber vermek gerekir
+    # Burada oyuncu çıkarsa listeyi güncellemek iyi olur ama şimdilik kalsın
     pass
 
 def puanla(room_name):
@@ -212,7 +213,6 @@ def puanla(room_name):
             word = player_answers.get(cat, "").strip().upper()
             
             if kelime_gecerli_mi(cat, word, letter):
-                # Pişti kontrolü
                 others_words = [
                     v.get(cat, "").strip().upper() 
                     for s, v in answers_pool.items() 
@@ -223,16 +223,18 @@ def puanla(room_name):
                 score = 0
             
             total_score += score
-            details[cat] = {"word": word, "score": score}
+            # Flutter 'detay', 'kelime', 'puan' bekliyor
+            details[cat] = {"kelime": word, "puan": score}
             
+        # Flutter 'toplam' ve 'detay' keylerini bekliyor
         results[sid] = {
-            "totalScore": total_score, 
-            "details": details, 
+            "toplam": total_score, 
+            "detay": details, 
             "nickname": players.get(sid, "Bilinmiyor")
         }
         
-    # Flutter: onResultsReceived -> 'game_result'
-    emit('game_result', results, room=room_name)
+    # Flutter 'puan_durumu' eventini bekliyor
+    emit('puan_durumu', results, room=room_name)
 
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
