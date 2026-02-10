@@ -3,6 +3,7 @@ import random
 import uuid
 from flask import Flask, request
 from flask_socketio import SocketIO, emit, join_room, leave_room
+from datetime import datetime # <-- Bunu importların arasına ekle
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'fenerbahce1907'
@@ -236,5 +237,24 @@ def puanla(room_name):
     # Flutter 'puan_durumu' eventini bekliyor
     emit('puan_durumu', results, room=room_name)
 
+# --- SOHBET EVENTİ ---
+@socketio.on('sohbet_gonder')
+def handle_chat(data):
+    room_name = data.get('roomName')
+    message = data.get('message')
+    sender = data.get('sender')
+    
+    if room_name:
+        # Şu anki saati al (Örn: 14:30)
+        zaman = datetime.now().strftime("%H:%M")
+        
+        # Odaya yay (broadcast)
+        emit('sohbet_al', {
+            'sender': sender,
+            'message': message,
+            'time': zaman
+        }, room=room_name)
+
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
+
