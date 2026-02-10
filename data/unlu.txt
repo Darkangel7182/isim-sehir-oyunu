@@ -1396,7 +1396,7 @@ Eric Gerets
 Arthur Zico
 Roberto De Zerbi
 Oliver Glasner
-Vincent Kompany (Teknik Direktör)
+Vincent Kompany
 Thiago Motta
 Kieran McKenna
 Enzo Maresca
@@ -2100,9 +2100,9 @@ Zihni Göktay
 Metin Serezli
 Nisa Serezli
 Adnan Şenses
-Ajda Pekkan (Oyuncu kimliğiyle)
-Emel Sayın (Oyuncu kimliğiyle)
-Gönül Yazar (Oyuncu kimliğiyle)
+Ajda Pekkan
+Emel Sayın
+Gönül Yazar
 Kerem Alışık
 Mehmet Ali Erbil
 Cem Yılmaz
@@ -2119,7 +2119,7 @@ Ata Demirer
 Tolga Çevik
 Beyazıt Öztürk
 Okan Bayülgen
-Huysuz Virjin (Seyfi Dursunoğlu)
+Huysuz Virjin
 Menderes Samancılar
 Nur Sürer
 Şerif Sezer
@@ -2188,7 +2188,7 @@ Serpil Çakmaklı
 Banu Alkan
 Ahu Tuğba
 Nuri Alço
-Tecavüzcü Coşkun (Coşkun Göğen)
+Tecavüzcü Coşkun
 Bahar Öztan
 Oya Aydoğan
 Pakize Suda
@@ -2199,7 +2199,7 @@ Sanem Çelik
 Nejat İşler
 Fikret Kuşkan
 Erkan Can
-Şener Şen (Tekrar hatırlatma)
+Şener Şen
 Uğur Yücel
 Şebnem Bozoklu
 Ezgi Mola
@@ -2236,8 +2236,8 @@ Yalçın Menteş
 Kayhan Yıldızoğlu
 Billur Kalkavan
 Nurseli İdiz
-Hande Yener (Konuk oyuncu rolleri)
-Demet Akalın (Konuk oyuncu rolleri)
+Hande Yener
+Demet Akalın
 Kevin Costner
 Richard Gere
 Meg Ryan
@@ -2363,7 +2363,7 @@ Janelle Monae
 Tessa Thompson
 Zoe Kravitz
 Lisa Bonet
-Lenny Kravitz (Oyuncu rolleri)
+Lenny Kravitz
 Will Smith
 Jaden Smith
 Willow Smith
@@ -2394,7 +2394,7 @@ Nilüfer
 Nükhet Duru
 Mazhar Alanson
 Fuat Güner
-Özkan Uğur (MFÖ)
+Özkan Uğur
 Bülent Ortaçgil
 Teoman
 Şebnem Ferah
@@ -2672,21 +2672,21 @@ Enya
 Enes Batur
 Barış Özcan
 Orkun Işıtmak
-Reynmen (Yusuf Aktaş)
+Reynmen
 Berkcan Güven
 Danla Bilic
 Duygu Özaslan
 Ruhi Çenet
-CZN Burak (Burak Özdemir)
-Nusret Gökçe (Salt Bae)
-Elraenn (Tuğkan Gönültaş)
-Kendine Müzisyen (Kemal Can Parlak)
-Jahrein (Ahmet Sonuç)
-Wtcn (Ferit Karakaya)
-Pqueen (Pelin Baynazoğlu)
-Unlost (Cantuğ Özsoy)
-Mithrain (Cem Karakoç)
-Pintipanda (Tuna Akşen)
+CZN Burak
+Nusret Gökçe
+Elraenn
+Kendine Müzisyen
+Jahrein
+Wtcn
+Pqueen
+Unlost
+Mithrain
+Pintipanda
 Can Sungur
 Enis Kirazoğlu
 Dost Kayaoğlu
@@ -2703,18 +2703,18 @@ Murat Soner
 Beyhan Budak
 Haluk Tatar
 İlkay Zaman
-Hakkı Alkan (ShiftDelete)
-Recep Baltaş (Technopat)
+Hakkı Alkan
+Recep Baltaş
 Ali Güngör
 Mesut Çevik
 Mendebur Lemur
-Deli Mi Ne (Fester Abdü)
+Deli Mi Ne
 Alper Rende
 Ali Biçim
 Mesut Can Tomay
-Bilal Hancı (Kafalar)
-Fatih Yasin (Kafalar)
-Atakan Özyurt (Kafalar)
+Bilal Hancı
+Fatih Yasin
+Atakan Özyurt
 Baturay Anar
 Meryem Can
 Elif Yalçın
@@ -2723,15 +2723,15 @@ Duru Önver
 Sibil Çetinkaya
 Ala Tokel
 Damla Altun
-Berk Keklik (Uberkuloz)
+Berk Keklik
 Cemre Solmaz
-Cellat36 (Özgür Deniz Cellat)
+Cellat36
 Ceren Yaldız
 Yaren Alaca
 Ayda Kutay
 Özgür Balakar
-Deep Turkish Web (Emre & Erdi)
-Röportaj Adam (Mahsun Karaca)
+Deep Turkish Web
+Röportaj Adam
 Oğuzhan Uğur
 Efe Uygaç
 Bartu Dev
@@ -2748,25 +2748,25 @@ Murat Engin Ekin
 Uğur Can Akgül
 Veysel Zaloğlu
 Doğan Kabak
-Otopark.com (Sinan Koç)
+Otopark.com
 Hilalys
-Miafitz (Gözde Demiral)
+Miafitz
 Anna Deniz
-Elwind (Kaan Atıcı)
-Thaldrin (Berke Demir)
-Naru (Koray Bıçak)
-Zeon (Necati Akçay)
-Levon (Levent Balım)
-Hype (Çağrı Ergün)
+Elwind
+Thaldrin
+Naru
+Zeon
+Levon
+Hype
 Berk Rip Tepe
 Güneş Begüm
-Zade (Barış Danış)
+Zade
 Eren Aktan
 Moparism
-Toqtir (Sedat Sakmar)
+Toqtir
 Turgut Uç
-Videoyun (Batu)
-Easter GamersTv (Mete Özbey)
+Videoyun
+Easter GamersTv
 Oha Diyorum
 Yap Yap
 Nolmuyo Bak
@@ -2813,7 +2813,7 @@ Mizkif
 Sodapoppin
 Lirik
 Tyler1
-Faker (Lee Sang-hyeok)
+Faker
 TenZ
 s1mple
 NiKo
@@ -2825,7 +2825,7 @@ Zach King
 Spencer X
 Loren Gray
 Dixie D'Amelio
-MKBHD (Marques Brownlee)
+MKBHD
 Linus Tech Tips
 Unbox Therapy
 Mrwhosetheboss
@@ -2836,14 +2836,14 @@ JerryRigEverything
 Supercar Blondie
 Doug DeMuro
 Shmee150
-Carwow (Mat Watson)
-Gordon Ramsay (YouTube)
-Uncle Roger (Nigel Ng)
+Carwow
+Gordon Ramsay
+Uncle Roger
 Binging with Babish
 Joshua Weissman
 Nick DiGiovanni
 Guga Foods
-First We Feast (Sean Evans)
+First We Feast
 H3H3 Productions
 Ethan Klein
 Trisha Paytas
@@ -2861,7 +2861,7 @@ Matti Haapoja
 Dan Mace
 Yes Theory
 Veritasium
-Vsauce (Michael Stevens)
+Vsauce
 Kurzgesagt
 SmarterEveryDay
 Mark Rober
@@ -2870,7 +2870,7 @@ SciShow
 CrashCourse
 TED-Ed
 The Fine Bros
-Good Mythical Morning (Rhett & Link)
+Good Mythical Morning
 KSI
 Logan Paul
 Jake Paul
@@ -2927,7 +2927,7 @@ FouseyTUBE
 Keemstar
 DramaAlert
 Philip DeFranco
-Anthony Fantano (The Needle Drop)
+Anthony Fantano
 Davie504
 TwoSetViolin
 RoomieOfficial
@@ -2961,10 +2961,10 @@ Mathologer
 Stand-up Mathematician
 Cüneyt Özdemir
 Nevşin Mengü
-Oğuzhan Uğur (BaBaLa TV)
+Oğuzhan Uğur
 Adem Metan
 Volkan Öge
-Ömer Şanlı (Ağır Mimar)
+Ömer Şanlı
 Merve Veziroğlu
 Cansu Dengey
 Polina Chursanova
@@ -2972,7 +2972,7 @@ Zeynep Özkaya
 Cemal Can Canseven
 Nisa Bölükbaşı
 Barış Murat Yağcı
-Sercan Yıldırım (Survivor sonrası)
+Sercan Yıldırım
 Adriana Lima
 Gisele Bündchen
 Naomi Campbell
@@ -3165,28 +3165,28 @@ Amine Gülşe
 Rüveyda Öksüz
 Ecem Çırpan
 Buse İskenderoğlu
-Itır Esen (Genç)
+Itır Esen
 Şevval Şahin
 Tara De Vries
 Deren Talu
 Derin Talu
 Yasmin Erbil
-Zeyna (Asena)
+Zeyna
 Tanyeli
 Didem Kınalı
 Burak Hakkı
-Kenan İmirzalıoğlu (Best Model)
-Kıvanç Tatlıtuğ (Best Model)
-Tolgahan Sayışman (Manhunt)
+Kenan İmirzalıoğlu
+Kıvanç Tatlıtuğ
+Tolgahan Sayışman
 Berk Oktay
-Çağatay Ulusoy (Best Model)
-Burak Özçivit (Best Model)
+Çağatay Ulusoy
+Burak Özçivit
 Furkan Palalı
 Yusuf Çim
 Ekin Mert Daymaz
 Barış Murat Yağcı
 Mert Öcal
-Atakan Arslan (Avatar)
+Atakan Arslan
 Uğur Pektaş
 Serkan Çayoğlu
 Ali Mert Yavuzcan
@@ -3197,20 +3197,20 @@ Melisa Aslı Pamuk
 Gizem Karaca
 Açelya Samyeli Danoğlu
 Ezgi Avcı
-Gökçe Bahadır (Modellik geçmişi)
-Cansu Dere (Modellik geçmişi)
-Selma Ergeç (Modellik geçmişi)
+Gökçe Bahadır
+Cansu Dere
+Selma Ergeç
 Wilma Elles
 Larissa Gacemer
 Chloe Loughnan
 Yolanthe Cabau
-Pascal Nouma (Reklam yüzü/Model)
+Pascal Nouma
 Tuğba Altıntop
 Yeşim Erçetin
 Nez
-Petek Dinçöz (Mankenlik kökenli)
-Hatice Gökçe (Tasarımcı/Model)
-Barbaros Şansal (Terzi yamağı/Moda)
+Petek Dinçöz
+Hatice Gökçe
+Barbaros Şansal
 Nur Yerlitaş
 Cemil İpekçi
 Hakan Akkaya
@@ -3228,7 +3228,7 @@ Buse Terim
 Duygu Çetinkaya
 Berna Keklikler
 Elif Şadoğlu
-Merve Aydın (Survivor/Model)
+Merve Aydın
 Sahra Işık
 Nagihan Karadere
 Seda Ocak
@@ -3491,15 +3491,15 @@ Karacaoğlan
 Dadaloğlu
 Köroğlu
 Aşık Veysel
-Neşet Ertaş (Söz yazarı kimliğiyle)
+Neşet Ertaş
 Ömer Hayyam
 Firdevsi
 Nizami
 Sadi Şirazi
 Hafız-ı Şirazi
 Feridüddin Attar
-İbn-i Sina (Yazar kimliğiyle)
-Farabi (Yazar kimliğiyle)
+İbn-i Sina
+Farabi
 Gazali
 İbn Haldun
 Evliya Çelebi
@@ -3627,29 +3627,29 @@ Remziye Hisar
 Dilhan Eryurt
 Kamile Şevki Mutlu
 Safiye Ali
-Sabiha Gökçen (Havacılık bilimi katkısı)
-Vecihi Hürkuş (Mühendislik)
+Sabiha Gökçen
+Vecihi Hürkuş
 Nuri Demirağ
 Şakir Zümre
 Ali Kuşçu
 Uluğ Bey
 Takiyüddin
-İbn-i Sina (Avicenna)
-El-Harezmi (Algoritma)
+İbn-i Sina
+El-Harezmi
 El-Biruni
 İbn-i Heysem
 Farabi
 Battani
 Sabit bin Kurra
-El-Cezeri (Robotik)
+El-Cezeri
 Piri Reis
 Katip Çelebi
 Akşemseddin
 İbn Rüşd
-Ömer Hayyam (Matematikçi yönü)
+Ömer Hayyam
 Hazerfen Ahmed Çelebi
 Lagari Hasan Çelebi
-Mimar Sinan (Mühendislik yönü)
+Mimar Sinan
 Wilhelm Röntgen
 Alfred Nobel
 Guglielmo Marconi
@@ -3659,12 +3659,12 @@ Henry Ford
 Rudolf Diesel
 Karl Benz
 Wernher von Braun
-Yuri Gagarin (Kozmonot/Bilimsel deney)
+Yuri Gagarin
 Neil Armstrong
 Buzz Aldrin
-Elon Musk (Mühendislik/Teknoloji)
-Steve Jobs (Teknoloji)
-Bill Gates (Yazılım)
+Elon Musk
+Steve Jobs
+Bill Gates
 Linus Torvalds
 Dennis Ritchie
 Ken Thompson
@@ -3708,9 +3708,9 @@ Milton Friedman
 Friedrich Hayek
 Thomas Malthus
 David Ricardo
-Herodot (Tarih Bilimi)
+Herodot
 Thukydides
-Sokrates (Felsefe/Mantık)
+Sokrates
 Platon
 Aristoteles
 Demokritos
@@ -3725,7 +3725,7 @@ Empedokles
 Zeno
 Plotinus
 Proclus
-Batlamyus (Ptolemy)
+Batlamyus
 Galen
 Hippokrat
 Andreas Vesalius
@@ -3796,10 +3796,10 @@ Nermin Abadan Unat
 Betül Mardin
 Leonardo da Vinci
 Michelangelo Buonarroti
-Raffaello Sanzio (Raphael)
+Raffaello Sanzio
 Donatello
 Sandro Botticelli
-Tiziano Vecellio (Titian)
+Tiziano Vecellio
 Caravaggio
 Gian Lorenzo Bernini
 Rembrandt van Rijn
@@ -3810,7 +3810,7 @@ Diego Velazquez
 Francisco Goya
 El Greco
 Hieronymus Bosch
-Pieter Bruegel (Baba)
+Pieter Bruegel
 Albrecht Dürer
 Jan van Eyck
 Vincent van Gogh
@@ -3920,7 +3920,7 @@ Burhan Doğançay
 Erol Akyavaş
 Ömer Uluç
 Mehmet Güleryüz
-Komet (Gürkan Coşkun)
+Komet
 Alaettin Aksoy
 Ergin İnan
 Utku Varlık
@@ -3954,7 +3954,7 @@ Nilten Çatık
 Seçkin Pirim
 Hande Şekerciler
 Arda Özsarlak
-Refik Anadol (Dijital Sanat)
+Refik Anadol
 Giotto di Bondone
 Masaccio
 Fra Angelico
@@ -4032,9 +4032,9 @@ Nam June Paik
 Bill Viola
 Chuck Close
 Julian Schnabel
-Jean-Michel Basquiat (Tekrar vurgu)
-Keith Haring (Tekrar vurgu)
-Banksy (Tekrar vurgu)
+Jean-Michel Basquiat
+Keith Haring
+Banksy
 Kaws
 Shepard Fairey
 Invader
@@ -4097,7 +4097,7 @@ Alex Ross
 Frank Frazetta
 Boris Vallejo
 H.R. Giger
-Moebius (Jean Giraud)
+Moebius
 Syd Mead
 Ralph McQuarrie
 Jeff Bezos
@@ -4123,7 +4123,7 @@ Phil Knight
 Charles Koch
 Julia Koch
 Michael Dell
-Ma Huateng (Pony Ma)
+Ma Huateng
 Jack Ma
 Colin Zheng Huang
 Zhang Yiming
@@ -4189,7 +4189,7 @@ Erol Sabancı
 Suzan Sabancı Dinçer
 Sevil Sabancı
 Hakan Sabancı
-Hacı Sabancı (Genç)
+Hacı Sabancı
 Özdemir Sabancı
 Demir Sabancı
 Şarık Tara
@@ -4264,12 +4264,12 @@ Ethem Sancak
 Talip Öztürk
 Galip Öztürk
 Mubariz Mansimov
-Rıza Sarraf (Reza Zarrab)
+Rıza Sarraf
 Sitkı Ayan
 Cihan Kamer
 Atasay Kamer
 Abdullah Kiğılı
-Mustafa Küçük (LCW)
+Mustafa Küçük
 Vahap Küçük
 Yalçın Ayaslı
 Mübariz Gurbanoğlu
@@ -4278,7 +4278,7 @@ John D. Rockefeller
 Andrew Carnegie
 J.P. Morgan
 Cornelius Vanderbilt
-Thomas Edison (Girişimci yönü)
+Thomas Edison
 Walt Disney
 Ray Kroc
 Sam Walton
@@ -4288,13 +4288,13 @@ Enzo Ferrari
 Ferruccio Lamborghini
 Soichiro Honda
 Kiichiro Toyoda
-Chung Ju-yung (Hyundai)
-Lee Byung-chul (Samsung)
-Koo In-hwoi (LG)
-Akio Morita (Sony)
-Masaru Ibuka (Sony)
+Chung Ju-yung
+Lee Byung-chul
+Koo In-hwoi
+Akio Morita
+Masaru Ibuka
 Momofuku Ando
-Ingvar Kamprad (IKEA)
+Ingvar Kamprad
 Amadeo Giannini
 Howard Schultz
 Ralph Lauren
@@ -4304,20 +4304,20 @@ Miuccia Prada
 Guccio Gucci
 Louis Vuitton
 Thierry Hermes
-Hans Wilsdorf (Rolex)
-Ole Kirk Christiansen (LEGO)
-Dietrich Mateschitz (Red Bull)
+Hans Wilsdorf
+Ole Kirk Christiansen
+Dietrich Mateschitz
 Chaleo Yoovidhya
 Richard Branson
 James Dyson
 Oprah Winfrey
 Martha Stewart
-Kylie Jenner (Girişimci yönü)
-Rihanna (Fenty)
-Jay-Z (İş insanı yönü)
-Dr. Dre (Beats)
-Kanye West (Yeezy)
-Kim Kardashian (Skims)
+Kylie Jenner
+Rihanna
+Jay-Z
+Dr. Dre
+Kanye West
+Kim Kardashian
 Paris Hilton
 Reed Hastings
 Marc Randolph
@@ -4344,19 +4344,19 @@ Satya Nadella
 Shantanu Narayen
 Arvind Krishna
 Lisa Su
-Jensen Huang (NVIDIA)
-Morris Chang (TSMC)
-Ren Zhengfei (Huawei)
-Lei Jun (Xiaomi)
-Robin Li (Baidu)
+Jensen Huang
+Morris Chang
+Ren Zhengfei
+Lei Jun
+Robin Li
 Daniel Ek
 Peter Thiel
 Reid Hoffman
 Max Levchin
 Sam Altman
 Vitalik Buterin
-Satoshi Nakamoto (Kurucu)
-Changpeng Zhao (CZ)
+Satoshi Nakamoto
+Changpeng Zhao
 Brian Armstrong
 Tyler Winklevoss
 Cameron Winklevoss
@@ -4432,7 +4432,7 @@ John Stockton
 Scottie Pippen
 Dennis Rodman
 Isiah Thomas
-Julius Erving (Dr. J)
+Julius Erving
 Moses Malone
 Elgin Baylor
 Jerry West
@@ -4552,7 +4552,7 @@ Vlade Divac
 Dino Radja
 Arvydas Sabonis
 Peja Stojakovic
-Hedo Türkoğlu (Tekrar vurgu)
+Hedo Türkoğlu
 Andrei Kirilenko
 Detlef Schrempf
 Rik Smits
@@ -4586,8 +4586,8 @@ Joe Ingles
 Ben Simmons
 Steven Adams
 Enes Kanter Freedom
-Ersan İlyasova (Tekrar vurgu)
-Ali Muhammed (Bobby Dixon)
+Ersan İlyasova
+Ali Muhammed
 Shane Larkin
 Scottie Wilbekin
 Bryant Dunston
@@ -4602,7 +4602,7 @@ Georgios Printezis
 Nick Calathes
 Mike James
 Will Clyburn
-Shane Larkin (Tekrar vurgu)
+Shane Larkin
 Rodrigue Beaubois
 Tibor Pleiss
 Ante Zizic
@@ -4632,7 +4632,7 @@ Muggsy Bogues
 Spud Webb
 Earl Boykins
 Nate Robinson
-Isaiah Thomas (Kısa)
+Isaiah Thomas
 Jamal Crawford
 Lou Williams
 Jason Terry
@@ -4692,7 +4692,7 @@ Teaira McCowan
 Tilbe Şenyürek
 Olcay Çakır Turgut
 Pelin Bilgiç
-Merve Aydın (Basketbolcu)
+Merve Aydın
 Sevgi Uzun
 Gökşen Fitik
 Michael Schumacher
@@ -4978,14 +4978,14 @@ Pato O'Ward
 Colton Herta
 Helio Castroneves
 Dario Franchitti
-Juan Pablo Montoya (IndyCar)
+Juan Pablo Montoya
 Tony Kanaan
 Gil de Ferran
 Sam Hornish Jr.
 Dan Wheldon
-Alexander Rossi (IndyCar)
-Romain Grosjean (IndyCar)
-Marcus Ericsson (IndyCar)
+Alexander Rossi
+Romain Grosjean
+Marcus Ericsson
 Toto Wolff
 Christian Horner
 Adrian Newey
@@ -5010,9 +5010,9 @@ Eddie Jordan
 Peter Sauber
 Ken Tyrrell
 Colin Chapman
-Enzo Ferrari (Kurucu)
-Bruce McLaren (Kurucu)
-Ferruccio Lamborghini (Kurucu)
+Enzo Ferrari
+Bruce McLaren
+Ferruccio Lamborghini
 İsmet İnönü
 Celal Bayar
 Adnan Menderes
@@ -5049,20 +5049,20 @@ Doğu Perinçek
 Mustafa Sarıgül
 Osman Gazi
 Orhan Gazi
-I. Murat (Hüdavendigar)
+I. Murat
 Yıldırım Bayezid
 Çelebi Mehmet
 II. Murat
 Yavuz Sultan Selim
-II. Selim (Sarı Selim)
+II. Selim
 III. Murat
 III. Mehmet
 I. Ahmet
 I. Mustafa
-II. Osman (Genç Osman)
+II. Osman
 IV. Murat
 Sultan İbrahim
-IV. Mehmet (Avcı)
+IV. Mehmet
 II. Süleyman
 II. Ahmet
 II. Mustafa
@@ -5082,7 +5082,7 @@ V. Mehmet Reşat
 Sultan Vahdettin
 Mete Han
 Teoman
-Atilla (Hun İmparatoru)
+Atilla
 Bumin Kağan
 İstemi Yabgu
 Bilge Kağan
@@ -5106,7 +5106,7 @@ Uzun Hasan
 Şah İsmail
 Babür Şah
 Ekber Şah
-Timur (Timurlenk)
+Timur
 Cengiz Han
 Kubilay Han
 Hülagü Han
@@ -5136,35 +5136,35 @@ Akhenaton
 Nefertiti
 Kleopatra
 Hatşepsut
-Keyhüsrev (Cyrus)
+Keyhüsrev
 Darius
-Serhas (Xerxes)
+Serhas
 Perikles
 Leonidas
 Büyük İskender
 Jül Sezar
-Augustus (Octavian)
+Augustus
 Tiberius
 Caligula
 Nero
 Trajan
 Hadrian
 Marcus Aurelius
-Constantine (Konstantin)
+Constantine
 Justinianus
 Theodora
-Herakleitos (Bizans)
-Fatih Sultan Mehmet (Tekrar hatırlatma - Çağ açan)
-Şarlman (Charlemagne)
-Barbarossa (Friedrich I)
+Herakleitos
+Fatih Sultan Mehmet
+Şarlman
+Barbarossa
 Aslan Yürekli Richard
-Kral John (Yurtsuz John)
-William (Fatih William)
+Kral John
+William
 VIII. Henry
 I. Elizabeth
 Kraliçe Victoria
 Mary Stuart
-Louis XIV (Güneş Kral)
+Louis XIV
 Louis XVI
 Marie Antoinette
 Napolyon Bonapart
@@ -5185,7 +5185,7 @@ Vladimir Putin
 Dmitri Medvedev
 Büyük Petro
 II. Katerina
-Ivan (Korkunç Ivan)
+Ivan
 II. Nikolay
 George Washington
 Thomas Jefferson
@@ -5265,7 +5265,7 @@ Hafız Esad
 Beşar Esad
 Kral Hüseyin
 Kral Abdullah
-Suudi Kralları (Faysal, Fahd, Selman)
+Suudi Kralları
 Şah Rıza Pehlevi
 Humeyni
 Hamaney
@@ -5281,10 +5281,10 @@ Ursula von der Leyen
 Dalai Lama
 Papa Franciscus
 Papa II. Ioannes Paulus
-Kraliçe II. Elizabeth (Tekrar vurgu - En uzun süre)
+Kraliçe II. Elizabeth
 Kral Charles III
 Prenses Diana
-Grace Kelly (Monako Prensesi)
+Grace Kelly
 Nuri Bilge Ceylan
 Yılmaz Güney
 Atıf Yılmaz
@@ -5362,7 +5362,7 @@ Mahsun Kırmızıgül
 Şahan Gökbakar
 Alper Çağlar
 Can Ulkay
-Ketche (Hakan Kırvavaç)
+Ketche
 Andaç Haznedaroğlu
 Ozan Açıktan
 Burak Aksak
@@ -5562,7 +5562,7 @@ Chris Columbus
 David Yates
 Mike Newell
 Serdar Gökhan
-Cüneyt Arkın (Yönetmen yönüyle)
+Cüneyt Arkın
 Taner Akvardar
 Hilal Saral
 Zeynep Günay Tan
@@ -5677,9 +5677,9 @@ Tarık Ünlüoğlu
 Kenan Işık
 Selçuk Yöntem
 Murat Yıldırım
-Kenan İmirzalıoğlu (Sunucu kimliğiyle)
-Oktay Kaynarca (Sunucu kimliğiyle)
-Barış Manço (7'den 77'ye)
+Kenan İmirzalıoğlu
+Oktay Kaynarca
+Barış Manço
 Metin Uca
 Alp Kırşan
 Vatan Şaşmaz
@@ -5687,7 +5687,7 @@ Ece Erken
 Bircan Bali
 Seren Serengil
 Arto
-Gülben Ergen (TV programcılığı)
+Gülben Ergen
 Lerzan Mutlu
 Petek Dinçöz
 Songül Karlı
@@ -5696,8 +5696,8 @@ Uğur Arslan
 Şebnem Kısaparmak
 Fatih Kısaparmak
 Nihat Hatipoğlu
-Cübbeli Ahmet Hoca (TV figürü)
-Adnan Oktar (TV figürü - Eski)
+Cübbeli Ahmet Hoca
+Adnan Oktar
 Güntekin Onay
 Rıdvan Dilmen
 Erman Toroğlu
@@ -5719,7 +5719,7 @@ Yalçın Çetin
 Orhan Ayhan
 Ümit Aktan
 İlker Yasin
-Halit Kıvanç (Spor spikeri yönü)
+Halit Kıvanç
 Tansu Polatkan
 Levent Özçelik
 Kerem Öncel
@@ -5733,7 +5733,7 @@ Ali Ece
 Serdar Ali Çelikler
 Ilgaz Çınar
 Ömer Üründül
-Yılmaz Vural (Yorumcu yönü)
+Yılmaz Vural
 Oprah Winfrey
 Ellen DeGeneres
 Larry King
@@ -5806,7 +5806,7 @@ Hunter S. Thompson
 Truman Capote
 Joseph Pulitzer
 William Randolph Hearst
-Rupert Murdoch (Medya patronu)
+Rupert Murdoch
 Ted Turner
 Roger Ailes
 Arianna Huffington
@@ -5839,7 +5839,7 @@ John Torode
 Heston Blumenthal
 Marco Pierre White
 Rick Stein
-Floyd on Fish (Keith Floyd)
+Floyd on Fish
 Mehmet Yalçınkaya
 Somer Sivrioğlu
 Danilo Zanna
@@ -5855,9 +5855,9 @@ Osman Sezener
 Yunus Emre Akkor
 Hazer Amani
 Cüneyt Asan
-Nusret Gökçe (Salt Bae)
-Burak Özdemir (CZN Burak)
-Gürkan Topçu (Gürkan Şef)
+Nusret Gökçe
+Burak Özdemir
+Gürkan Topçu
 Barış Muslu
 Özgür Özkan
 Murat Bozok
@@ -5865,8 +5865,8 @@ Rafet İnce
 Eyüp Kemal Sevinç
 Sahrap Soysal
 Emine Beder
-Oktay Usta (Oktay Aymelek)
-Ümit Usta (Ümit Ömer Sevinç)
+Oktay Usta
+Ümit Usta
 Cemil Usta
 Beyti Güler
 Musa Dağdeviren
@@ -5969,7 +5969,7 @@ Emeril Lagasse
 Rachael Ray
 Martha Stewart
 Paula Deen
-Ina Garten (Barefoot Contessa)
+Ina Garten
 Alton Brown
 Tom Colicchio
 Padma Lakshmi
@@ -5990,7 +5990,7 @@ Pierre Hermé
 Dominique Ansel
 Adriano Zumbo
 Christophe Michalak
-Jordi Roca (Pastry)
+Jordi Roca
 Albert Adria
 Will Goldfarb
 Antonio Bachour
@@ -6057,7 +6057,7 @@ Mehmet Sur
 Orhan Eren
 Rıfat Yurttaş
 Faruk Batuhan Öner
-Yasin Obuz (MasterChef)
+Yasin Obuz
 Batuhan Bayır
 Kıvanç Ermiş
 Suna Aydın
@@ -6070,16 +6070,16 @@ Berk İlter
 Walison Fonseca
 Didem Devay
 Berker Başmanav
-Özdemir Şef (Dönerci)
+Özdemir Şef
 Midye Şef
 Tostçu Erol
 Şırdancı Bedri
 Paçacı Şemsi
 Köfteci Yusuf
-Sultanahmet Köftecisi (Mehmet Seracettin Efendi)
-İskender Efendi (İskender Kebap mucidi)
+Sultanahmet Köftecisi
+İskender Efendi
 Hacı Abdullah
-Güllüoğlu Ailesi (Nadir Güllü)
+Güllüoğlu Ailesi
 Hafız Mustafa
 Ali Muhiddin Hacı Bekir
 Karaköy Güllüoğlu
