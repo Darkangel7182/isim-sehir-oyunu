@@ -170,3 +170,5 @@ yağdanlık
 yağmurluk
 zımba
 zımpara
+şapka
+şal
