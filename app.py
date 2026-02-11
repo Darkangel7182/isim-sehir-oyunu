@@ -262,47 +262,68 @@ def handle_rematch_request(data):
     old_room = data.get('old_room')
     nick = data.get('nickname')
     
+    # Eğer eski oda silinmişse veya yoksa işlem yapma
+    if old_room not in odalar:
+        return
+
     if old_room not in tekrar_istekleri:
         tekrar_istekleri[old_room] = []
     
-    # Oyuncuyu listeye ekle (Eğer zaten ekli değilse)
+    # Oyuncuyu listeye ekle (Tekrar eklemeyi önle)
     if not any(p['sid'] == request.sid for p in tekrar_istekleri[old_room]):
         tekrar_istekleri[old_room].append({'sid': request.sid, 'nick': nick})
     
-    # Eğer 2 kişi de istek gönderdiyse YENİ OYUN BAŞLAT
-    if len(tekrar_istekleri[old_room]) == 2:
-        p1 = tekrar_istekleri[old_room][0]
-        p2 = tekrar_istekleri[old_room][1]
+    # --- KRİTİK DEĞİŞİKLİK BURADA ---
+    # Eski odadaki toplam oyuncu sayısını al
+    hedef_oyuncu_sayisi = len(odalar[old_room]['players'])
+    
+    # Herkes "Tekrar Oyna" dedi mi?
+    if len(tekrar_istekleri[old_room]) == hedef_oyuncu_sayisi:
         
         # Yeni oda oluştur
         new_match_room = f"match_{uuid.uuid4().hex[:8]}"
         all_cats = ["İsim", "Şehir", "Hayvan", "Bitki", "Ülke", "Eşya", "Yemek", "Ünlü"]
         selected_cats = random.sample(all_cats, 5)
         
+        # Yeni oyuncu listesini ve rakipler haritasını oluştur
+        new_players_dict = {}
+        rakipler_dict = {}
+        
+        # Bekleme listesindeki HERKESİ yeni odaya ekle
+        for p in tekrar_istekleri[old_room]:
+            sid = p['sid']
+            nick = p['nick']
+            
+            # Socket odasına al
+            join_room(new_match_room, sid=sid)
+            
+            # Veri yapılarını doldur
+            new_players_dict[sid] = nick
+            rakipler_dict[sid] = nick
+
+        # Odayı veritabanına (memory) kaydet
         odalar[new_match_room] = {
             'password': None, 
-            'host': p1['sid'], # İlk isteği gönderen host olsun
+            'host': tekrar_istekleri[old_room][0]['sid'], # İlk basan host olsun
             'letter': random.choice(HARFLER),
             'categories': selected_cats,
-            'players': {p1['sid']: p1['nick'], p2['sid']: p2['nick']},
+            'players': new_players_dict,
             'answers': {}, 
             'scored': False
         }
         
-        # Oyuncuları yeni odaya al
-        join_room(new_match_room, sid=p1['sid'])
-        join_room(new_match_room, sid=p2['sid'])
-        
-        # Eski odayı listeden temizle
+        # Eski istek listesini temizle
         del tekrar_istekleri[old_room]
+        # İstersen eski odayı da silebilirsin ama oyuncular kopabilir, garbage collector halleder.
         
-        # Eşleşme tamam sinyali gönder (Mevcut yapınla uyumlu)
+        # Herkese "Oyun Başlıyor" sinyali gönder
         emit('eslesme_tamam', {
             'oda': new_match_room, 
             'harf': odalar[new_match_room]['letter'], 
             'kategoriler': selected_cats,
-            'rakipler': {p1['sid']: p1['nick'], p2['sid']: p2['nick']}
+            'rakipler': rakipler_dict
         }, room=new_match_room)
 
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
+
