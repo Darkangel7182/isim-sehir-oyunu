@@ -146,7 +146,7 @@ def handle_matchmaking(data):
         emit('eslesme_tamam', {
             'oda': match_room, 
             'harf': odalar[match_room]['letter'], 
-            'kategoriler': selected_cats
+            'kategoriler': selected_cats,
             'rakipler': {p1['sid']: p1['nick'], p2['sid']: p2['nick']}
         }, room=match_room)
 
@@ -258,5 +258,6 @@ def handle_chat(data):
 
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
+
 
 
